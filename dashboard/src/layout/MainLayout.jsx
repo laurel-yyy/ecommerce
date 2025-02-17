@@ -4,10 +4,12 @@ import Header from './Header';
 import Sidebar from './Sidebar';
 
 const MainLayout = () => {
+    const[showSidebar, setShowSidebar] = React.useState(false);
+
     return (
         <div className='bg-[#cdcae9] w-full min-h-screen'>
-            <Header />
-            <Sidebar />
+            <Header showSidebar={showSidebar} setShowSidebar={setShowSidebar}/>
+            <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar}/>
             <div className='ml-0 lg:ml-[260px] pt-[95px] transition-all'>
                 <Outlet/>
             </div>

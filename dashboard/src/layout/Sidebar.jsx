@@ -3,7 +3,7 @@ import { Link, useLocation} from 'react-router-dom';
 import { getNav } from '../navigation/index';
 import { BiLogOutCircle } from 'react-icons/bi';
 
-const Sidebar = () => {
+const Sidebar = ({showSidebar, setShowSidebar}) => {
 
     const { pathname } = useLocation();
 
@@ -18,11 +18,11 @@ const Sidebar = () => {
 
     return (
         <div>
-            <div>
+            <div onClick={()=> setShowSidebar(false)} className={`flex duration-200 ${showSidebar ? 'visible':'invisible'} w-screen h-screen bg-[#22292f80] top-0 left-0 z-0`}>
 
             </div>
 
-            <div className={`w-[260px] fixed bg-[#e6e7fb] z-50 top-0 h-screen shadow-[0_0_15px_0_rgba(0,0,0,0.5)] transition-all`}>
+            <div className={`w-[260px] fixed bg-[#e6e7fb] z-50 top-0 h-screen shadow-[0_0_15px_0_rgba(0,0,0,0.5)] transition-all ${showSidebar ? 'left-0':'-left-[260px] lg:left-0'}`}>
                 <div className='h-[70px] flex justify-center items-center'>
                     <Link to='/' className='w-[180px] h-[50px]'>
                         <img src="/images/logo.png" alt="logo" className='w-full h-full' />
