@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom'
 import { FaGoogle, FaFacebook} from 'react-icons/fa';
 import { PropagateLoader } from 'react-spinners';
 import toast from 'react-hot-toast';
@@ -11,6 +11,7 @@ import { seller_login,messageClear } from '../../store/Reducers/authReducer';
 
 const Login = () => {
 
+    const navigate = useNavigate()
     const dispatch = useDispatch()
     const {loader,errorMessage,successMessage} = useSelector(state=>state.auth)
 
@@ -36,6 +37,7 @@ const Login = () => {
         if (successMessage) {
             toast.success(successMessage)
             dispatch(messageClear())  
+            navigate('/') 
         }
         if (errorMessage) {
             toast.error(errorMessage)

@@ -2,7 +2,7 @@ const adminModel = require('../models/adminModel')
 const sellerModel = require('../models/sellerModel')
 const sellerCustomerModel  = require('../models/chat/sellerCustomerModel')
 const { responseReturn } = require('../utiles/response')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
 const { createToken } = require('../utiles/tokenCreate')
 
 class authControllers {
@@ -73,7 +73,7 @@ class authControllers {
         try {
             const seller = await sellerModel.findOne({email}).select('+password')
             if (seller) {
-                const match = await bcrpty.compare(password, seller.password)
+                const match = await bcrypt.compare(password, seller.password)
                 if (match) {
                     const token = await createToken({
                         id : seller.id,
@@ -105,11 +105,12 @@ class authControllers {
                 const user = await adminModel.findById(id)
                 responseReturn(res, 200, {userInfo: user})
             } else {
-                console.log("seller info")
+                const seller = await sellerModel.findById(id)
+                responseReturn(res, 200, {userInfo : seller})
             }
 
         } catch(err){
-            console.log(err.message);
+            responseReturn(res,500,{error: 'Internal Server Error'})
         }
     }
 }

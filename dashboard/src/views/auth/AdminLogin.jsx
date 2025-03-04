@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { admin_login, MessageClear } from '../../store/Reducers/authReducer';
+import { admin_login, messageClear } from '../../store/Reducers/authReducer';
 import {PropagateLoader} from 'react-spinners';
 import { overrideStyle } from '../../utils/utils';
 import toast from 'react-hot-toast';
@@ -32,11 +32,11 @@ const AdminLogin = () => {
     useEffect(()=>{
         if(errorMessage){
             toast.error(errorMessage);
-            dispatch(MessageClear());
+            dispatch(messageClear());
         }
         if(successMessage){
             toast.success(successMessage);
-            dispatch(MessageClear());
+            dispatch(messageClear());
             navigate('/');
         }
     } ,[dispatch, errorMessage, successMessage]);
