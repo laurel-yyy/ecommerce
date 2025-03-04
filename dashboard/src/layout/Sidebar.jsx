@@ -10,7 +10,7 @@ const Sidebar = ({showSidebar, setShowSidebar}) => {
 
     const [allNavs, setAllNavs] = React.useState([]);
     useEffect(() => {
-        const navs = getNav('admin');
+        const navs = getNav('seller');
         setAllNavs(navs);
     }, []);
 

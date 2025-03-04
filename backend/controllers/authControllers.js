@@ -1,4 +1,6 @@
 const adminModel = require('../models/adminModel')
+const sellerModel = require('../models/sellerModel')
+const sellerCustomerModel  = require('../models/chat/sellerCustomerModel')
 const { responseReturn } = require('../utiles/response')
 const bcrypt = require('bcrypt')
 const { createToken } = require('../utiles/tokenCreate')
@@ -31,6 +33,38 @@ class authControllers {
             }
         } catch(err){
             responseReturn(res, 500, {error: err.message})
+        }
+    }
+
+    seller_register = async(req, res) => {
+        const {name, email, password} = req.body;
+        try {
+            const getUser = await sellerModel.findOne({email})
+            if(getUser) {
+                responseReturn(res, 404, {error: "Email already exist"})
+            } else {
+                const seller = await sellerModel.create ({
+                    name,
+                    email,
+                    password: await bcrypt.hash(password, 10),
+                    method:'menualy',
+                    shopInfo:{}
+                })
+                console.log(seller)
+                await sellerCustomerModel.create({
+                    myId: seller.id
+              })
+
+              const token = await createToken({ id : seller.id, role: seller.role })
+              res.cookie('accessToken',token, {
+               expires : new Date(Date.now() + 7*24*60*60*10000 )
+              })
+
+              responseReturn(res,201,{token,message: 'Register Success'})
+            }
+            
+        } catch (error) {
+            responseReturn(res,500,{error: 'Internal Server Error'})
         }
     }
 
